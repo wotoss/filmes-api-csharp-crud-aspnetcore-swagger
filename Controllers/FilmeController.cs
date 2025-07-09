@@ -65,5 +65,24 @@ public class FilmeController : ControllerBase
         _filmeContext.SaveChanges();
         return NoContent();
     }
+
+    [HttpPatch("{id}")]
+    public IActionResult AtualizaFilmesParcial(int id, JsonPatchDocument<UpdateFilmeDto> patch)
+    {
+        var filmePatch = _filmeContext.Filmes.FirstOrDefault(
+            filme => filme.Id == id);
+        if (filmePatch is null) return NotFound();
+
+        var filmeParaAtualizar = _mapper.Map<UpdateFilmeDto>(filmePatch);
+        patch.ApplyTo(filmeParaAtualizar, ModelState);
+
+        if (!TryValidateModel(filmeParaAtualizar))
+        {
+            return ValidationProblem(ModelState);
+        }
+        _mapper.Map(filmeParaAtualizar, filmePatch);
+        _filmeContext.SaveChanges();
+        return NoContent();
+    }
     
 }

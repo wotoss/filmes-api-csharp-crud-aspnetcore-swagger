@@ -10,6 +10,7 @@ namespace FilmesApi.ProfileAutoMapper
         {
             CreateMap<CreateFilmeDto, Filme>();
             CreateMap<UpdateFilmeDto, Filme>();
+            CreateMap<Filme, UpdateFilmeDto>();
         }
         
     }
