@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //configuração base de dados
 builder.Services.AddDbContext<FilmeContext>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString("FilmeConnection")));
+   options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("FilmeConnection")));
 
 //vamos configurar o automapper para usar de forma -global na nossa aplicação
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

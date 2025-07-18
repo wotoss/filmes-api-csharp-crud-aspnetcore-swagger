@@ -12,6 +12,9 @@ namespace FilmesApi.Data
             : base(options) 
         { }
         //irá nós das as informações dos nossos dados do banco
-        public DbSet<Filme> Filmes {  get; set; }   
+        public DbSet<Filme> Filmes {  get; set; }
+        public DbSet<Cinema> Cinemas { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Sessao> Sessaos { get; set; }  
     }
 }
