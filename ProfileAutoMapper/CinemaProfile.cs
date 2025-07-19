@@ -14,7 +14,11 @@ namespace FilmesApi.ProfileAutoMapper
             CreateMap<Cinema, ReadCinemaDto>()
                 //estou dizendo que o meu campo de "cinema.Endereco" será mapeado para "cinemaDto.Endereco"
                 .ForMember(cinemaDto => cinemaDto.Endereco,
-                options => options.MapFrom(cinema => cinema.Endereco));
+                options => options.MapFrom(cinema => cinema.Endereco))
+            //vamos pegar o valor da sessão
+                 .ForMember(cinemaDto => cinemaDto.Sessao,
+                 opt => opt.MapFrom(cinema => cinema.Sessao));
+
             CreateMap<UpdateCinemaDto, Cinema>();
         }
     }

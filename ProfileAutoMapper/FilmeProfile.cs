@@ -11,7 +11,11 @@ namespace FilmesApi.ProfileAutoMapper
             CreateMap<CreateFilmeDto, Filme>();
             CreateMap<UpdateFilmeDto, Filme>();
             CreateMap<Filme, UpdateFilmeDto>();
-            CreateMap<Filme, ReadFilmeDto>();
+            CreateMap<Filme, ReadFilmeDto>()
+                //vamos mapear m (filme ) apartir das (sessões) dele
+                .ForMember(filmeDto => filmeDto.Sessao,
+                options => options.MapFrom(filme =>
+                filme.Sessao));
         }
         
     }
