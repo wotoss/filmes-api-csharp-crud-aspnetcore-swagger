@@ -42,9 +42,24 @@ public class FilmeController : ControllerBase
     //retornando filmes
     [HttpGet]
     public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0,
-        [FromQuery] int take = 50)
+        [FromQuery] int take = 50,
+        [FromQuery] string? nomeCinema = null)
     {
-        return _mapper.Map<List<ReadFilmeDto>>(_filmeContext.Filmes.Skip(skip).Take(take).ToList());
+        if (nomeCinema == null)
+        {
+            var buscarTodosSemFiltro = _mapper.Map<List<ReadFilmeDto>>(_filmeContext.Filmes.Skip(skip).Take(take).ToList());
+            return buscarTodosSemFiltro;
+        }
+        //boas praticas não preciso passar o else por ser apenas um if "padrão ele já entende o else"
+        else
+        {
+            //retornando através de filtro nome -
+            var retornandoComFiltroPorNome = _mapper.Map<List<ReadFilmeDto>>
+                (_filmeContext.Filmes.Skip(skip).Take(take).Where(filme => filme.Sessao
+                              .Any(sessao => sessao.Cinema.Nome == nomeCinema)).ToList());
+            
+            return retornandoComFiltroPorNome;
+        }
     }
 
     [HttpGet("{id}")]
